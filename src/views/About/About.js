@@ -1,8 +1,13 @@
 import React from 'react'
+import Header from "../../components/Header/Header"
+import Footer from "../../components/Footer/Footer"
 
 function about() {
   return (
-    <div>about</div>
+    <div>
+    <Header/>
+    <Footer/>
+    </div>
   )
 }
 
