@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { Menu, X, User, LogIn, Settings, LogOut } from 'lucide-react'
 import Logo from "../../Assets/Images/foodmartlogo.png"
 import "./Header.css"
@@ -31,14 +31,17 @@ function Header() {
 
         <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
           {navLinks.map((link) => (
-            <Link 
+            <NavLink 
               key={link.to} 
               to={link.to} 
-              className="nav-link"
+              className={({ isActive }) => 
+                `nav-link ${isActive ? 'active-nav-link' : ''}`
+              }
               onClick={() => setIsMenuOpen(false)}
+              end={link.to === '/'}
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
         <div className="header-actions">

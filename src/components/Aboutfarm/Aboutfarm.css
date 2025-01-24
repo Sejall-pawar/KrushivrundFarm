@@ -50,14 +50,14 @@
   }
   
   .about-card-description {
-    color: #4a5568;
+    color: #4a684f;
     line-height: 1.6;
   }
   
   .read-more-container {
     display: flex;
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
   
   .read-more-link {
