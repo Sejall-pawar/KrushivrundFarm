@@ -5,7 +5,7 @@ import './Footer.css';
 const Footer = () => {
   return (
     <footer className="footer">
-      <p className="footer-text">© 2025 My React App. All rights reserved.</p>
+      <p className="footer-text">© 2025 KrushivrundFarm. All rights reserved.</p>
       <nav className="footer-nav">
         <Link to="/" className="footer-link">Home</Link>
         <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link>

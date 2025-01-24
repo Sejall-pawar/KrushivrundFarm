@@ -2,6 +2,7 @@ import React from 'react'
 import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
 import Slider from "../../components/Slider/Slider"
+import Aboutfarm from "../../components/Aboutfarm/Aboutfarm"
 import "./Home.css"
 
 function Home() {
@@ -16,11 +17,11 @@ function Home() {
           </h3>
         </div>
         <div className='infoimg'>
-          <Slider/>
+          <Slider />
         </div>
       </div>
 
-      
+      <Aboutfarm />
 
       <Footer />
     </div>

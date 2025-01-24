@@ -57,3 +57,12 @@
     height: 100%; /* Ensure the slider fits the container */
     width: 100%;
 }
+
+
+@media screen and (max-width: 500px){}
+
+@media screen and (min-width: 500px) and (max-width: 768px){}
+
+@media screen and (min-width: 769px) and (max-width: 992px){}
+
+@media screen and (min-width: 993px) and (max-width: 1200px){}
