@@ -1,75 +1,97 @@
-.abouttagline{
+.about-farm-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .section-title {
     text-align: center;
     color: #003300;
-}
-
-.about-container{
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+  }
+  
+  .about-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .about-card {
+    background-color: #f9fbf9;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+  
+  .about-card-icon {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
-}
-
-.aboutbox{
-    height: 180px;
-    width: 350px;
-    border: 2px solid black;
-    margin: 10px auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 15px;
-    border-radius: 5px;
-}
-
-.aboutbox h1{
-    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .about-card-icon .icon {
+    color: #003300
+  }
+  
+  .about-card-title {
     color: #003300;
-    margin-top: 30px;
-}
-
-.abt-img{
-    background-color: white;
-    height: 50px;
-    display: block;
-    margin: -30px auto;
-}
-
-.abt-btn {
-    font-size: 20px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 10px; 
-    margin: 10px auto;
-    height: 50px;
-    width: 250px;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-card-description {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  .read-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  
+  .read-more-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     background-color: #003300;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer; 
-    text-transform: capitalize; 
-}
-
-.abt-btn img {
-    height: 20px; 
-    width: auto; 
-}
-
-.abt-link {
-    text-decoration: none; 
-}
-
-.abt-link:hover .abt-btn {
-    background-color: #005500; 
-}
-
-
-
-@media screen and (max-width: 500px){}
-
-@media screen and (min-width: 500px) and (max-width: 768px){}
-
-@media screen and (min-width: 769px) and (max-width: 992px){}
-
-@media screen and (min-width: 993px) and (max-width: 1200px){}
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .read-more-link:hover {
+    background-color: #095b09;
+  }
+  
+  .link-arrow {
+    stroke: white;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .about-cards-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .about-card {
+      padding: 1.5rem;
+    }
+  }

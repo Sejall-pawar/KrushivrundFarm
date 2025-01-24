@@ -1,47 +1,62 @@
 import React from 'react'
-import "./Aboutfarm.css"
 import { Link } from 'react-router-dom'
-import Mission from "../../Assets/Images/mission.png"
-import Value from "../../Assets/Images/value.png"
-import Offer from "../../Assets/Images/offer.png"
-import Arrow from "../../Assets/Images/right-arrow.png"
+import { Target, Leaf, Gift, ArrowRight } from 'lucide-react'
+import './Aboutfarm.css'
+
+const AboutSection = ({ icon: Icon, title, description }) => {
+  return (
+    <div className="about-card">
+      <div className="about-card-icon">
+        <Icon size={48} className="icon" />
+      </div>
+      <h2 className="about-card-title">{title}</h2>
+      <p className="about-card-description">{description}</p>
+    </div>
+  );
+};
 
 function Aboutfarm() {
-    return (
-        <div>
+  const aboutSections = [
+    {
+      icon: Target,
+      title: "Our Mission",
+      description: "To nurture the land responsibly, grow quality crops, and provide our customers with farm-fresh products that promote health and well-being."
+    },
+    {
+      icon: Leaf,
+      title: "Our Values",
+      description: "We follow eco-friendly practices to protect the environment for future generations. From planting to harvest, we ensure that every product meets the highest standards."
+    },
+    {
+      icon: Gift,
+      title: "What We Offer",
+      description: "Fresh grapes and raisins grown with care. Hands-on knowledge about sustainable agriculture."
+    }
+  ];
 
-            <h1 className='abouttagline'>About Krushivrund Farm</h1>
-
-            <div className='about-container'>
-                <div className='aboutbox'>
-                    <img className='abt-img' src={Mission} />
-                    <h1>Our Mission</h1>
-                    <h3>
-                        To nurture the land responsibly, grow quality crops, and provide our customers with farm-fresh products that promote health and well-being.
-                    </h3>
-                </div>
-                <div className='aboutbox'>
-                    <img className='abt-img' src={Value} />
-                    <h1>Our Values</h1>
-                    <h3>
-                        We follow eco-friendly practices to protect the environment for future generations.
-                    </h3>
-                    <h3>From planting to harvest, we ensure that every product meets the highest standards.</h3>
-                </div>
-                <div className='aboutbox'>
-                    <img className='abt-img' src={Offer} />
-                    <h1>What We Offer</h1>
-                    <h3>Fresh greps and raisin grown with care.</h3>
-                    <h3>Hands-on knowledge about sustainable agriculture.</h3>
-                </div>
-            </div>
-            <Link to="/about" className="abt-link">
-                <button className="abt-btn">
-                    Read More About Us <img src={Arrow} alt="arrow" />
-                </button>
-            </Link>
-        </div>
-    )
+  return (
+    <div className="about-farm-container">
+      <h1 className="section-title">About Krushivrund Farm</h1>
+      
+      <div className="about-cards-grid">
+        {aboutSections.map((section, index) => (
+          <AboutSection 
+            key={index}
+            icon={section.icon}
+            title={section.title}
+            description={section.description}
+          />
+        ))}
+      </div>
+      
+      <div className="read-more-container">
+        <Link to="/about" className="read-more-link">
+          Read More About Us
+          <ArrowRight className="link-arrow" />
+        </Link>
+      </div>
+    </div>
+  )
 }
 
 export default Aboutfarm
