@@ -1,0 +1,109 @@
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f5f0;
+    color: #333333;
+  }
+  
+  .contact-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .contact-header h1 {
+    color: #003300;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .contact-content {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .contact-info {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-form {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-section h2, 
+  .business-hours h2, 
+  .social-media h2,
+  .contact-form h2 {
+    color: #003300;
+    border-bottom: 2px solid #003300;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .contact-details .detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .contact-details .icon {
+    margin-right: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icon {
+    text-decoration: none;
+    color: #003300;
+    transition: color 0.3s ease;
+  }
+  
+  .contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .contact-form textarea {
+    height: 150px;
+  }
+  
+  .submit-btn {
+    background-color: #003300;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #215614;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-content {
+      flex-direction: column;
+    }
+  }

@@ -7,6 +7,7 @@ import Home from "./views/Home/Home"
 import About from "./views/About/About"
 import Products from "./views/Products/Products"
 import Contact from "./views/Contact/Contact"
+import Account from "./views/Account/Account"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -21,12 +22,16 @@ const router = createBrowserRouter ([
     element: <About/>
   },
   {
-    path: 'products',
+    path: '/products',
     element: <Products/>
   },
   {
-    path: 'contact',
+    path: '/contact',
     element: <Contact/>
+  },
+  {
+    path: '/account',
+    element: <Account/>
   }
 ])
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Menu, X, User, LogIn, Settings, LogOut } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import Logo from "../../Assets/Images/foodmartlogo.png"
 import "./Header.css"
 
@@ -15,7 +15,7 @@ function Header() {
     { to: '/', label: 'Home' },
     { to: '/about', label: 'About' },
     { to: '/products', label: 'Products' },
-    { to: '/contact', label: 'Contact' }
+    { to: '/contact', label: 'Reach Out' }
   ];
 
   return (
@@ -46,28 +46,15 @@ function Header() {
         </nav>
         <div className="header-actions">
           <div className="user-account-container">
+            <Link to='/account'>
             <button 
               className="user-account-btn" 
               onClick={toggleAccountDropdown}
             >
               <User size={24} />
             </button>
-            {isAccountDropdownOpen && (
-              <div className="account-dropdown">
-                <Link to="/login" className="dropdown-item">
-                  <LogIn size={18} />
-                  <span>Login</span>
-                </Link>
-                <Link to="/profile" className="dropdown-item">
-                  <Settings size={18} />
-                  <span>Profile</span>
-                </Link>
-                <button className="dropdown-item logout-btn">
-                  <LogOut size={18} />
-                  <span>Logout</span>
-                </button>
-              </div>
-            )}
+            </Link>
+           
           </div>
           <button 
             className="mobile-menu-toggle" 
