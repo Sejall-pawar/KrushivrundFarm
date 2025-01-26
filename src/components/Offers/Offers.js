@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import './Offers.css';
+import {Link} from 'react-router-dom'
 
 const ProductCard = ({ image, title, price, onIncrement, onDecrement, quantity }) => {
   return (
@@ -98,6 +99,7 @@ const Offers = () => {
         ))}
       </div>
       <div className="view-all-container">
+        <Link to='./products'>
         <button className="view-all-btn">
           View All Products
           <svg 
@@ -115,6 +117,7 @@ const Offers = () => {
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </button>
+        </Link>
       </div>
     </div>
   );

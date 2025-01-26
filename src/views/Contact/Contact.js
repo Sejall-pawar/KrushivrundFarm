@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Contact.css';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
 
@@ -63,9 +64,9 @@ const Contact = () => {
           <div className="social-media">
             <h2>Follow Us</h2>
             <div className="social-links">
-              <a href="#" className="social-icon">🌱 Instagram</a>
-              <a href="#" className="social-icon">🌾 Facebook</a>
-              <a href="#" className="social-icon">🍇 Twitter</a>
+              <a href="#" className="social-icon"><Instagram size={24} /> Instagram</a>
+              <a href="#" className="social-icon"><Facebook size={24} /> Facebook</a>
+              <a href="#" className="social-icon"><Twitter size={24} /> Twitter</a>
             </div>
           </div>
         </div>

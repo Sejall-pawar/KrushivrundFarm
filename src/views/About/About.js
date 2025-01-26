@@ -1,5 +1,6 @@
 import React from 'react';
-import { Target, Leaf, Sun, Award } from 'lucide-react';
+import {Link} from 'react-router-dom'
+import { Target, Leaf, Sun, Award, } from 'lucide-react';
 import './About.css';
 import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
@@ -110,7 +111,9 @@ const CTASection = () => (
   <div className="cta-section">
     <h2>Join Our Journey</h2>
     <p>Discover sustainable agriculture and premium produce</p>
+    <Link to='/products'>
     <button className="cta-button">Explore Our Products</button>
+    </Link>
   </div>
 );
 

@@ -36,7 +36,7 @@
   
   .story-content p {
     line-height: 1.8;
-    color: #4a5568;
+    color: #4a684c;
   }
   
   .values-section {
@@ -104,7 +104,7 @@
   }
   
   .product-card {
-    background-color: #f9fafb;
+    background-color: #e8fae8;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -137,6 +137,7 @@
     background-color: white;
     color: #003300;
     border: none;
+    text-decoration: none;
     padding: 1rem 2rem;
     font-size: 1.2rem;
     border-radius: 8px;
