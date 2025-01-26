@@ -160,3 +160,18 @@
   .view-all-btn svg {
     stroke: white;
   }
+
+  @media screen and (max-width: 500px) {
+    .product-image {
+      height: 200px;
+    }
+    .product-price {
+      font-size: 1.5rem;
+      margin-left: 10px;
+    }
+    .quantity-control {
+      gap: 0.25rem;
+      padding: 0.15rem 0.55rem;
+      margin-right: 10px;
+    }
+  }
