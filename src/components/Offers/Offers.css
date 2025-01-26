@@ -182,14 +182,20 @@
   }
 
   .quantity-control {
-    gap: 0.2rem;
-    padding: 0.5rem 0.15rem;
-    margin-right: 10px;
+    gap: 1px;
+    padding: 2px 2px;
+    margin-right: 30px;
   }
 
   .add-to-cart-btn {
     padding: 0.75rem;
     margin-bottom: -15px;
+  }
+  .quantity-btn{
+    gap: 2px;
+  }
+  .quantity-value {
+    min-width: 10px;
   }
 }
 
