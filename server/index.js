@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { common } from '@mui/material/colors';
 dotenv.config();
 
 const app = express();
@@ -23,7 +22,14 @@ app.get("/health", (req, res) => {
         success: true,
         message: "Server is running",
     })
+});
+
+app.get("*", (req, res) => {
+    res.status({
+        success: false,
+        message: "API endpoint doesn't exits"
 })
+});
 
 const PORT = process.env.PORT || 5000;
 
