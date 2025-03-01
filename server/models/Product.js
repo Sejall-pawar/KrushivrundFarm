@@ -10,7 +10,7 @@ const productSchema = new Schema({
         required: true,
     },
     features: {
-        type: String,
+        type: [String],
         required: true,
     },
     price: {
@@ -29,12 +29,12 @@ const productSchema = new Schema({
         required: true,
     },
     tags: {
-        type: String,
+        type: [String],
     },
 }, {
     timestamps: true,
 });
 
-const Product = mode("Product", productSchema);
+const Product = model("Product", productSchema);
 
 export default Product;

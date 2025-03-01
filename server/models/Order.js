@@ -1,69 +1,71 @@
-import {model, Schema} from "mongoose"; 
-import Product from "./Product";
+import { model, Schema } from "mongoose";
 
-const orderSchema = new Schema({
-    user:{
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+const orderSchema = new Schema(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    Products:[
-        {
-           productID: {
-            type: Schema.Types.ObjectId,
-            ref: "Product",
-            required: true,
-           },
-           quantity: {
-            type: Number,
-            required: true,
-           },
-           price: {
-            type: Number,
-            required: true,
-           },
-        }
+    products: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+      },
     ],
     totalBill: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     deliveryAddress: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     phone: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     paymentMode: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-    paymentID: {
-        type: Schema.Types.ObjectId,
-        ref: "Payment",
-        required: true,
+    paymentId: {
+      type: Schema.Types.ObjectId,
+      ref: "Payment"
     },
     status: {
-        type: String,
-        default: "pending",
+      type: String,
+      enum: ["pending", "processing", "shipped", "delivered", "cancelled", "paid"],
+      default: "pending",
     },
     timeline: [
-        {
-            status: {
-                type: String,
-                required: true,
-            },
-            date: {
-                type: Date,
-                default: Date.now,
-            },
+      {
+        status: {
+          type: String,
+          required: true,
         },
-    ]
-}, {
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
 const Order = model("Order", orderSchema);
 
