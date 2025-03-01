@@ -1,5 +1,5 @@
 import Order from "../models/Order.js";
-
+import mongoose from "mongoose";
 import { responder } from "./../utils/utils.js";
 
 const postOrders = async (req, res) => {
@@ -56,7 +56,7 @@ const putOrders = async (req, res) => {
   }
 
   // user can only update his own order
-  if (user.role=="user" && order.userId!=user._id) {
+  if (user.role=="user" && order.userId!=user.id) {
     return responder(
       res,
       false,
@@ -67,7 +67,7 @@ const putOrders = async (req, res) => {
   }
 
   // user can only cancel the order if it is not delivered
-  if (user.role!=="user") {
+  if (user.role=="user") {
     if (order.status == "delivered") {
       return responder(
         res,
@@ -112,6 +112,9 @@ const getOrderById = async (req, res) => {
   const user = req.user;
   const { id } = req.params;
 
+  console.log("User from JWT:", user);
+  console.log("Order ID requested:", id);
+
   let order;
 
   try {
@@ -124,13 +127,20 @@ const getOrderById = async (req, res) => {
       .populate("paymentId", "-__v -createdAt -updatedAt");
 
     if (!order) {
+      console.log("Order not found in database");
       return responder(res, false, "Order not found", null, 404);
     }
+
+    console.log("Order userId:", order.userId);
+    console.log("User.id:", user.id);
+    console.log("User Role:", user.role);
   } catch (error) {
     return responder(res, false, error.message, null, 400);
   }
 
-  if (user._id != order.userId && user.role != "admin") {
+  // Convert both IDs to strings before comparing
+  if (!order.userId.equals(user.id) && user.role !== "admin") {
+    console.log("Unauthorized access: User does not match Order userId");
     return responder(
       res,
       false,
@@ -143,11 +153,12 @@ const getOrderById = async (req, res) => {
   return responder(res, true, "Order fetched successfully", order, 200);
 };
 
+
 const getOrdersByUserId = async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
-  if (user.role != "admin" && user._id != id) {
+  if (user.role != "admin" && user.id != id) {
     return responder(
       res,
       false,
