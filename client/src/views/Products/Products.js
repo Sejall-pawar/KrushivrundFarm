@@ -1,150 +1,142 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Star } from 'lucide-react';
-import './Products.css';
-import Header from "../../components/Header/Header"
-import Footer from "../../components/Footer/Footer"
-
-// Product images (you'll need to replace these with actual image paths)
-import BlackRaisins from '../../Assets/Images/img3.jpg';
-import GoldenRaisins from '../../Assets/Images/img8.jpg';
-import YellowRaisins from '../../Assets/Images/img7.jpg';
-import BrownRaisins from '../../Assets/Images/brown.jpg';
-import FlavoredRaisins from '../../Assets/Images/flavoured.avif';
-import RaisinBars from '../../Assets/Images/bars.jpg';
-import FreshGrapes from '../../Assets/Images/img1.jpg';
-
-const ProductCard = ({ name, description, features, uses, image, price }) => {
-  const [quantity, setQuantity] = useState(1);
-
-  return (
-    <div className="product-card">
-      <div className="product-image-container">
-        <img src={image} alt={name} className="product-image" />
-        <div className="product-badge">New</div>
-      </div>
-      <div className="product-details">
-        <h2 className="product-name">{name}</h2>
-        <p className="product-description">{description}</p>
-
-        <div className="product-features">
-          <h3>Features</h3>
-          <ul>
-            {features.map((feature, index) => (
-              <li key={index}>{feature}</li>
-            ))}
-          </ul>
-        </div>
-
-
-        <div className="product-purchase">
-          <span className="product-price">₹{price}</span>
-          <div className="quantity-control">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              disabled={quantity <= 1}
-            >-</button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)}>+</button>
-          </div>
-          <button className="add-to-cart-btn">
-            <ShoppingCart size={20} />
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import React, { useEffect, useState } from "react";
+import { ShoppingCart, Star } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import "./Products.css";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import {
+  getCurrentUser,
+  getJwtToken,
+  getReadableTimestamp,
+} from "../../utils/common";
+import BlackRaisins from "../../Assets/Images/img3.jpg";
+import GoldenRaisins from "../../Assets/Images/img8.jpg";
+import YellowRaisins from "../../Assets/Images/img7.jpg";
+import BrownRaisins from "../../Assets/Images/brown.jpg";
+import FlavoredRaisins from "../../Assets/Images/flavoured.avif";
+import RaisinBars from "../../Assets/Images/bars.jpg";
+import FreshGrapes from "../../Assets/Images/img1.jpg";
 
 const Products = () => {
+  const [user, setUser] = useState({});
+  const [orders, setOrders] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState({});
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      setUser(user);
+    } else {
+      toast.error("Please login to access this page");
+      setTimeout(() => {
+        window.location.href = "/account";
+      }, 2000);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user?._id) {
+      loadUserOrders();
+    }
+  }, [user]);
+
+  const loadUserOrders = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/orders/user/${user._id}`,
+        {
+          headers: {
+            Authorization: getJwtToken(),
+          },
+        }
+      );
+      setOrders(response.data.data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const OrderViewDialog = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+    const {
+      _id,
+      products,
+      totalBill,
+      deliveryAddress,
+      phone,
+      paymentMode,
+      status,
+      createdAt,
+    } = selectedOrder;
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="close-btn" onClick={onClose}>Close</button>
+          <h1>Order Details</h1>
+          <p>Order ID: {_id}</p>
+          <p>Ordered On: {getReadableTimestamp(createdAt)}</p>
+          <p>Payment Mode: {paymentMode}</p>
+          <p>Delivery Address: {deliveryAddress}</p>
+          <p>Phone: {phone}</p>
+          <p>Status: {status}</p>
+          {products.map((product) => (
+            <div className="order-item" key={product.productId._id}>
+              <img src={product.productId.images[0]} alt={product.productId.name} className="order-img" />
+              <div>
+                <p>{product.productId.name}</p>
+                <p>₹{product.price} x {product.quantity}</p>
+              </div>
+            </div>
+          ))}
+          <p className="total-bill">Bill Amount: ₹{totalBill}</p>
+        </div>
+      </div>
+    );
+  };
+
   const products = [
-    {
-      name: "Black Raisins",
-      description: "Rich in flavor and packed with nutrients, our black raisins are sun-dried and naturally sweet.",
-      features: ["High in iron", "Rich in antioxidants", "Good source of fiber"],
-      image: BlackRaisins,
-      price: 250
-    },
-    {
-      name: "Golden Raisins",
-      description: "Golden raisins are known for their plump texture and sweet, tangy flavor.",
-      features: ["Naturally sweet", "Rich in potassium", "Preservative-free"],
-      image: GoldenRaisins,
-      price: 270
-    },
-    {
-      name: "Yellow Raisins",
-      description: "Naturally dried to retain their bright color and delicate sweetness.",
-      features: ["Loaded with vitamins", "Mineral-rich", "Bright color"],
-      image: YellowRaisins,
-      price: 240
-    },
-    {
-      name: "Brown Raisins",
-      description: "Traditional raisins known for their earthy flavor and versatility.",
-      features: ["High in energy", "Naturally sweet", "Classic flavor"],
-      image: BrownRaisins,
-      price: 230
-    },
-    {
-      name: "Flavored Raisins",
-      description: "Experience raisins like never before with our range of flavored options.",
-      features: ["Natural flavor infusions", "Unique taste", "Variety of flavors"],
-      image: FlavoredRaisins,
-      price: 290
-    },
-    {
-      name: "Raisin Bars",
-      description: "Wholesome and delicious snack combining the goodness of raisins.",
-      features: ["Energy-packed", "Preservative-free", "Natural ingredients"],
-      image: RaisinBars,
-      price: 180
-    },
+    { name: "Black Raisins", description: "Rich in flavor and packed with nutrients.", features: ["High in iron", "Rich in antioxidants", "Good source of fiber"], image: BlackRaisins, price: 250 },
+    { name: "Golden Raisins", description: "Golden raisins are known for their plump texture.", features: ["Naturally sweet", "Rich in potassium", "Preservative-free"], image: GoldenRaisins, price: 270 },
+    { name: "Yellow Raisins", description: "Naturally dried to retain their bright color.", features: ["Loaded with vitamins", "Mineral-rich", "Bright color"], image: YellowRaisins, price: 240 },
+    { name: "Brown Raisins", description: "Traditional raisins known for their earthy flavor.", features: ["High in energy", "Naturally sweet", "Classic flavor"], image: BrownRaisins, price: 230 },
+    { name: "Flavored Raisins", description: "Experience raisins like never before.", features: ["Natural flavor infusions", "Unique taste", "Variety of flavors"], image: FlavoredRaisins, price: 290 },
+    { name: "Raisin Bars", description: "Wholesome and delicious snack.", features: ["Energy-packed", "Preservative-free", "Natural ingredients"], image: RaisinBars, price: 180 },
   ];
 
   return (
     <div>
-      <Header/>
+      <Header />
       <div className="products-page">
-        <div className="products-hero">
-          <h1>Our Products</h1>
-          <p>Premium Quality Grapes and Raisins from Krushivrund Farm</p>
-        </div>
-
+        <h1>Our Products</h1>
+        <p>Premium Quality Grapes and Raisins from Krushivrund Farm</p>
         <div className="products-grid">
           {products.map((product, index) => (
-            <ProductCard key={index} {...product} />
+            <div key={index} className="product-card">
+              <img src={product.image} alt={product.name} className="product-image" />
+              <h2>{product.name}</h2>
+              <p>{product.description}</p>
+              <p className="product-price">₹{product.price}</p>
+              <button className="add-to-cart-btn">
+                <ShoppingCart size={20} /> Add to Cart
+              </button>
+            </div>
           ))}
         </div>
-
-        <div className="why-choose-section">
-          <h2>Why Choose Krushivrund Farm?</h2>
-          <div className="choose-reasons">
-            <div className="reason">
-              <Star className="reason-icon" />
-              <h3>Farm Fresh</h3>
-              <p>Straight from our farm to your home</p>
+        <h2>My Orders</h2>
+        <div className="orders-list">
+          {orders.map((order) => (
+            <div key={order._id} className="order-card" onClick={() => { setSelectedOrder(order); setIsDialogOpen(true); }}>
+              <p>Order ID: {order._id}</p>
+              <p>Ordered On: {getReadableTimestamp(order.createdAt)}</p>
+              <p>Total: ₹{order.totalBill}</p>
             </div>
-            <div className="reason">
-              <Star className="reason-icon" />
-              <h3>100% Natural</h3>
-              <p>Free from artificial additives</p>
-            </div>
-            <div className="reason">
-              <Star className="reason-icon" />
-              <h3>Sustainably Grown</h3>
-              <p>Eco-friendly organic farming</p>
-            </div>
-          </div>
+          ))}
         </div>
-
-        <div className="cta-section">
-          <h2>Ready to Enjoy Farm-Fresh Goodness?</h2>
-          <p>Browse, select, and get farm-fresh products delivered to your doorstep</p>
-          <button className="start-shopping-btn">Start Shopping Now</button>
-        </div>
+        <OrderViewDialog isOpen={isDialogOpen} onClose={() => { setIsDialogOpen(false); setSelectedOrder({}); }} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
