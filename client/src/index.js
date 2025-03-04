@@ -9,6 +9,8 @@ import Products from "./views/Products/Products"
 import Contact from "./views/Contact/Contact"
 import Account from "./views/Account/Account"
 import Cart from "./views/Cart/Cart"
+import Checkout from './views/CheckOut/CheckOut';
+import OrderConfirmation from './views/OrderConfirmation/OrderConfirmation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -37,6 +39,14 @@ const router = createBrowserRouter ([
   {
     path: '/cart',
     element: <Cart/>
+  },
+  {
+    path: '/checkout',
+    element: <Checkout/>
+  },
+  {
+    path: '/order-confirmation/:orderId',
+    element: <OrderConfirmation/>
   }
 ])
 

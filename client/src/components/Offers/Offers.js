@@ -14,27 +14,13 @@ const ProductCard = ({ image, title, price, onIncrement, onDecrement, quantity }
         <h2 className="product-title">{title}</h2>
         <div className="product-price-section">
           <span className="product-price">₹{price * quantity}</span>
-          <div className="quantity-control">
-            <button 
-              className="quantity-btn" 
-              onClick={onDecrement}
-              disabled={quantity <= 1}
-            >
-              <Minus size={18} />
-            </button>
-            <span className="quantity-value">{quantity}</span>
-            <button 
-              className="quantity-btn" 
-              onClick={onIncrement}
-            >
-              <Plus size={18} />
-            </button>
-          </div>
         </div>
-        <button className="add-to-cart-btn">
+        <Link to='./products'>
+        <button className="view-cart-btn">
           <ShoppingCart size={20} />
-          Add to Cart
+          View Product
         </button>
+        </Link>
       </div>
     </div>
   );
@@ -56,7 +42,7 @@ const Offers = () => {
     },
     {
       id: 'raisins',
-      image: require('../../Assets/Images/raisin.avif'),
+      image: require('../../Assets/Images/flavoured.avif'),
       title: 'Natural Raisins',
       basePrice: 200
     },
@@ -68,19 +54,6 @@ const Offers = () => {
     }
   ];
 
-  const handleIncrement = (productId) => {
-    setQuantities(prev => ({
-      ...prev,
-      [productId]: prev[productId] + 1
-    }));
-  };
-
-  const handleDecrement = (productId) => {
-    setQuantities(prev => ({
-      ...prev,
-      [productId]: Math.max(1, prev[productId] - 1)
-    }));
-  };
 
   return (
     <div className="offerings-container">
@@ -93,8 +66,6 @@ const Offers = () => {
             title={product.title}
             price={product.basePrice}
             quantity={quantities[product.id]}
-            onIncrement={() => handleIncrement(product.id)}
-            onDecrement={() => handleDecrement(product.id)}
           />
         ))}
       </div>

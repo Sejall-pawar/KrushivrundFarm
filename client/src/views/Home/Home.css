@@ -96,10 +96,12 @@
   font-size: 3rem;
   margin-bottom: 0.5rem;
   font-weight: 700;
+  margin-right: 40px;
 }
 
 .slider-content p {
   font-size: 1.5rem;
+  margin-right: 40px;
 }
 
 .slider-controls {

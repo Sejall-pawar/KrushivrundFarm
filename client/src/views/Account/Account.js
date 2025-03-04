@@ -4,7 +4,7 @@ import { FiEdit, FiShoppingCart, FiHeart, FiBox, FiCreditCard, FiBell, FiLogOut 
 import './Account.css';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import axios from 'axios'; // Make sure to install axios: npm install axios
+import axios from 'axios';
 
 // API base URL
 const API_BASE_URL = 'http://localhost:5002';
@@ -30,12 +30,30 @@ const Account = () => {
         address: ''
     });
     const [errors, setErrors] = useState({});
+    const [statusMessage, setStatusMessage] = useState(''); // For debugging and user feedback
+    // Add a state to store signup data temporarily
+    const [signupData, setSignupData] = useState(null);
 
     // Check if user is logged in on component mount
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
-            fetchUserData(token);
+        const storedUserData = localStorage.getItem('userData');
+        
+        console.log("Token from localStorage:", token);
+        console.log("User data from localStorage:", storedUserData);
+        
+        if (token && storedUserData) {
+            try {
+                const parsedUserData = JSON.parse(storedUserData);
+                setUserData(parsedUserData);
+                setIsLoggedIn(true);
+                setStatusMessage('Logged in with stored user data');
+            } catch (error) {
+                console.error('Error parsing stored user data:', error);
+                localStorage.removeItem('userData');
+            }
+        } else {
+            setStatusMessage('No stored credentials found, please log in');
         }
     }, []);
 
@@ -50,27 +68,6 @@ const Account = () => {
             address: ''
         });
         setErrors({});
-    };
-
-    // Fetch user data using the stored token
-    const fetchUserData = async (token) => {
-        try {
-            // You'll need to implement this endpoint in your backend
-            const response = await axios.get(`${API_BASE_URL}/profile`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            
-            if (response.data) {
-                setUserData(response.data);
-                setIsLoggedIn(true);
-            }
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-            // If token is invalid, clear it
-            localStorage.removeItem('token');
-        }
     };
 
     const handleTabClick = (tab) => {
@@ -131,6 +128,7 @@ const Account = () => {
         }
         
         setIsLoading(true);
+        setStatusMessage(`Attempting to ${authMode}...`);
         
         try {
             if (authMode === 'signup') {
@@ -144,23 +142,36 @@ const Account = () => {
                     address: formData.address
                 };
                 
+                // Save the signup data to state for potential later use
+                setSignupData(signupData);
+                
+                console.log("Sending signup data:", signupData);
                 const response = await axios.post(`${API_BASE_URL}/signup`, signupData);
+                console.log("Signup response:", response.data);
                 
                 if (response.data && response.data.token) {
-                    // Store the signup data temporarily
-                    const tempUserData = {
+                    // Store the user data directly after signup - with ALL fields
+                    const newUserData = {
                         name: formData.name,
                         email: formData.email,
                         phone: formData.phone,
                         address: formData.address
                     };
                     
-                    // Clear the form and switch to login mode
+                    // Store token and user data in localStorage
+                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('userData', JSON.stringify(newUserData));
+                    
+                    // Update state
+                    setUserData(newUserData);
+                    setIsLoggedIn(true);
+                    setStatusMessage('Signup successful! You are now logged in.');
+                    resetForm();
+                } else {
+                    // If no token in response but otherwise successful
                     resetForm();
                     setAuthMode('login');
-                    
-                    // Show success message
-                    alert('Signup successful! Please login with your credentials.');
+                    setStatusMessage('Signup successful! Please login with your credentials.');
                 }
             } else {
                 // Call login API with full URL
@@ -169,21 +180,106 @@ const Account = () => {
                     password: formData.password
                 };
                 
+                console.log("Sending login data:", loginData);
                 const response = await axios.post(`${API_BASE_URL}/login`, loginData);
+                console.log("Login response:", response.data);
                 
                 if (response.data && response.data.token) {
+                    // First check if we have this user's data already from a recent signup
+                    let userInfo = null;
+                    
+                    // Check if this is the same email as our recent signup data
+                    if (signupData && signupData.email === formData.email) {
+                        userInfo = {
+                            name: signupData.name,
+                            email: signupData.email,
+                            phone: signupData.phone,
+                            address: signupData.address
+                        };
+                        console.log("Using recent signup data for user info:", userInfo);
+                    } else {
+                        // Check if there's stored user data for this email
+                        const storedUserData = localStorage.getItem('userData');
+                        
+                        if (storedUserData) {
+                            try {
+                                const parsedData = JSON.parse(storedUserData);
+                                if (parsedData.email === formData.email) {
+                                    // Use stored data if emails match
+                                    userInfo = parsedData;
+                                    console.log("Using stored user data:", userInfo);
+                                }
+                            } catch (error) {
+                                console.error('Error parsing stored user data:', error);
+                            }
+                        }
+                    }
+                    
+                    // If no saved data for this email, create minimal user info
+                    if (!userInfo) {
+                        // If we still don't have user info, try to get it from the server
+                        try {
+                            // Try to get user data from the server using the token
+                            const userResponse = await axios.get(`${API_BASE_URL}/user/profile`, {
+                                headers: {
+                                    'Authorization': `Bearer ${response.data.token}`
+                                }
+                            });
+                            
+                            if (userResponse.data && (userResponse.data.user || userResponse.data.userData)) {
+                                userInfo = {
+                                    email: formData.email,
+                                    name: '',
+                                    phone: '',
+                                    address: '',
+                                    ...((userResponse.data.user || userResponse.data.userData))
+                                };
+                                console.log("Retrieved user data from server:", userInfo);
+                            } else {
+                                // Default minimal user info if no data from server
+                                userInfo = {
+                                    email: formData.email,
+                                    name: '',
+                                    phone: '',
+                                    address: ''
+                                };
+                                console.log("Using minimal user info - no data from server");
+                            }
+                        } catch (profileError) {
+                            console.error("Error fetching user profile:", profileError);
+                            // Default minimal user info if error fetching profile
+                            userInfo = {
+                                email: formData.email,
+                                name: '',
+                                phone: '',
+                                address: ''
+                            };
+                            console.log("Using minimal user info due to profile fetch error");
+                        }
+                    }
+                    
+                    // Store token and user data in localStorage
                     localStorage.setItem('token', response.data.token);
-                    // Fetch user data after successful login
-                    await fetchUserData(response.data.token);
-                    // Reset form after successful login
+                    localStorage.setItem('userData', JSON.stringify(userInfo));
+                    
+                    // Update state
+                    setUserData(userInfo);
+                    setIsLoggedIn(true);
+                    setStatusMessage('Login successful!');
                     resetForm();
+                } else {
+                    setStatusMessage('Login response received but no token found');
+                    setErrors({ auth: 'Invalid response from server' });
                 }
             }
         } catch (error) {
             console.error('Authentication error:', error);
+            setStatusMessage(`Authentication error: ${error.message}`);
             
             // Handle API errors
             if (error.response) {
+                console.error('Error response details:', error.response.status, error.response.data);
+                
                 if (error.response.status === 401) {
                     setErrors({ auth: 'Invalid email or password' });
                 } else if (error.response.data && error.response.data.message) {
@@ -208,25 +304,63 @@ const Account = () => {
         }
     };
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
         try {
             const token = localStorage.getItem('token');
             
             // Optional: Call logout API to invalidate token on server
-            await axios.post(`${API_BASE_URL}/logout`, {}, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            if (token) {
+                axios.post(`${API_BASE_URL}/logout`, {}, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).catch(err => console.log('Logout API error:', err));
+            }
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
             // Clear token and reset state
             localStorage.removeItem('token');
+            localStorage.removeItem('userData');
             setIsLoggedIn(false);
             setActiveTab('profile');
             resetForm();
+            setStatusMessage('You have been logged out');
+            // Also clear the signup data
+            setSignupData(null);
         }
+    };
+
+    // Debug section that can be removed in production
+    const debugSection = (
+        <div style={{ padding: '10px', background: '#f0f0f0', marginTop: '20px', borderRadius: '5px' }}>
+            <h3>Debug Info (remove in production)</h3>
+            <p>Status: {statusMessage}</p>
+            <p>isLoggedIn: {isLoggedIn ? 'true' : 'false'}</p>
+            <p>Token in localStorage: {localStorage.getItem('token') ? 'Yes' : 'No'}</p>
+            <p>Current auth mode: {authMode}</p>
+            <p>Recent signup data available: {signupData ? 'Yes' : 'No'}</p>
+            <div>
+                <strong>User Data:</strong>
+                <pre>{JSON.stringify(userData, null, 2)}</pre>
+            </div>
+            <button onClick={() => console.log({
+                isLoggedIn,
+                userData,
+                formData,
+                errors,
+                signupData,
+                token: localStorage.getItem('token')
+            })}>
+                Log State to Console
+            </button>
+        </div>
+    );
+
+    // Function to handle profile edit (placeholder)
+    const handleEditProfile = () => {
+        // In a real implementation, this would open a form to edit profile details
+        alert("Edit profile functionality would be implemented here");
     };
 
     // Render authentication forms when not logged in
@@ -354,6 +488,9 @@ const Account = () => {
                                 <p>Already have an account? <button onClick={toggleAuthMode}>Login</button></p>
                             )}
                         </div>
+                        
+                        {/* Debug info - remove in production */}
+                        {debugSection}
                     </div>
                 </div>
                 <Footer />
@@ -369,8 +506,8 @@ const Account = () => {
                 <div className="sidebar">
                     <div className="profile-info">
                         <FaUserCircle className="profile-icon" />
-                        <h2>{userData.name}</h2>
-                        <p>{userData.email}</p>
+                        <h2>{userData.name || 'User'}</h2>
+                        <p>{userData.email || 'email@example.com'}</p>
                     </div>
                     <nav className="anav-links">
                         <a
@@ -435,21 +572,21 @@ const Account = () => {
                             <div className="profile-details">
                                 <div className="detail-row">
                                     <label>Name:</label>
-                                    <span>{userData.name}</span>
+                                    <span>{userData.name || 'Not provided'}</span>
                                 </div>
                                 <div className="detail-row">
                                     <label>Email:</label>
-                                    <span>{userData.email}</span>
+                                    <span>{userData.email || 'Not provided'}</span>
                                 </div>
                                 <div className="detail-row">
                                     <label>Phone:</label>
-                                    <span>{userData.phone}</span>
+                                    <span>{userData.phone || 'Not provided'}</span>
                                 </div>
                                 <div className="detail-row">
                                     <label>Address:</label>
-                                    <span>{userData.address}</span>
+                                    <span>{userData.address || 'Not provided'}</span>
                                 </div>
-                                <button className="edit-btn">
+                                <button className="edit-btn" onClick={handleEditProfile}>
                                     <FiEdit className="icon" />
                                     Edit Profile
                                 </button>
@@ -459,26 +596,31 @@ const Account = () => {
                     {activeTab === 'orders' && (
                         <div className="orders-tab">
                             <h1>Orders</h1>
+                            <p>You don't have any orders yet.</p>
                         </div>
                     )}
                     {activeTab === 'wishlist' && (
                         <div className="wishlist-tab">
                             <h1>Wishlist</h1>
+                            <p>Your wishlist is empty.</p>
                         </div>
                     )}
                     {activeTab === 'current-orders' && (
                         <div className="current-orders-tab">
                             <h1>Current Orders</h1>
+                            <p>You don't have any active orders at the moment.</p>
                         </div>
                     )}
                     {activeTab === 'payment' && (
                         <div className="payment-tab">
                             <h1>Payment</h1>
+                            <p>No payment methods added yet.</p>
                         </div>
                     )}
                     {activeTab === 'notifications' && (
                         <div className="notifications-tab">
                             <h1>Notifications</h1>
+                            <p>You don't have any notifications.</p>
                         </div>
                     )}
                 </div>
