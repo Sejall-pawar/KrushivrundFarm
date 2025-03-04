@@ -13,7 +13,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5002/products");
+        const response = await fetch("https://krushivrundfarm.onrender.com/products");
         const result = await response.json();
         console.log("API Response:", result); // Debugging
 
@@ -62,7 +62,7 @@ const Products = () => {
             {products.map((product) => (
               <div key={product._id} className="product-card">
                 <img
-                  src={`http://localhost:5002${product.images}`}
+                  src={`https://krushivrundfarm.onrender.com${product.images}`}
                   alt={product.name}
                   className="product-image"
                 />

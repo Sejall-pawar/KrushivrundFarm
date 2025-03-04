@@ -55,7 +55,7 @@ const OrderConfirmation = () => {
 
         // If localStorage doesn't have the data or doesn't match, fetch from API
         console.log("Fetching order details from API");
-        const response = await fetch(`http://localhost:5002/orders/${orderId}`, {
+        const response = await fetch(`https://krushivrundfarm.onrender.com/orders/${orderId}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -164,7 +164,7 @@ const OrderConfirmation = () => {
       };
 
       // Call your backend to initialize PhonePe payment
-      const response = await fetch("http://localhost:5002/payments/initiate-phonepe", {
+      const response = await fetch("https://krushivrundfarm.onrender.com/payments/initiate-phonepe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -204,7 +204,7 @@ const OrderConfirmation = () => {
       const token = localStorage.getItem("token");
 
       // Verify the payment with your backend
-      const verifyResponse = await fetch("http://localhost:5002/payments/verify-phonepe", {
+      const verifyResponse = await fetch("https://krushivrundfarm.onrender.com/payments/verify-phonepe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -266,7 +266,7 @@ const OrderConfirmation = () => {
       // Add more logging
       console.log("Updating order status with data:", paymentData);
 
-      const updateResponse = await fetch(`http://localhost:5002/orders/${orderId}`, {
+      const updateResponse = await fetch(`https://krushivrundfarm.onrender.com/orders/${orderId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

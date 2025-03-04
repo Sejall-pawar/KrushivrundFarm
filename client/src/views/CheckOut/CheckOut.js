@@ -93,7 +93,7 @@ const Checkout = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5002/orders", {
+      const response = await fetch("https://krushivrundfarm.onrender.com/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -228,7 +228,7 @@ const Checkout = () => {
                     <div key={item._id} className="order-item">
                       <div className="item-info">
                         <img
-                          src={`http://localhost:5002${item.images}`}
+                          src={`https://krushivrundfarm.onrender.com${item.images}`}
                           alt={item.name}
                           className="item-image"
                         />
