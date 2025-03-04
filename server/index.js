@@ -18,7 +18,7 @@ import {
   putOrders,
 } from "./controllers/Order.js";
 import { postPayments } from "./controllers/Payment.js";
-import { getProducts, postProducts } from "./controllers/product.js";
+import { getProducts, postProducts } from "./controllers/Product.js";
 import { postLogin, postSignup } from "./controllers/user.js";
 import {
   checkRoleMiddleware,
