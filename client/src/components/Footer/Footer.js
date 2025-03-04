@@ -1,16 +1,16 @@
 import React from 'react';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
-  Instagram, 
-  Linkedin 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from '../../Assets/Images/foodmartlogo.png';
-import "./Footer.css" 
+import "./Footer.css"
 
 const Footer = () => {
   return (
@@ -20,10 +20,10 @@ const Footer = () => {
           <img src={logo} alt="Krushivrund Farm Logo" className="footer-logo" />
           <p>Nurturing health naturally through sustainable farming and premium produce.</p>
           <div className="social-links">
-            <a href="#" className="social-icon"><Facebook /></a>
-            <a href="#" className="social-icon"><Twitter /></a>
-            <a href="#" className="social-icon"><Instagram /></a>
-            <a href="#" className="social-icon"><Linkedin /></a>
+            <a href="https://www.facebook.com/krushivrundfarm" className="social-icon"><Facebook /></a>
+            <a href="https://x.com/krushivrunfarm" className="social-icon"><Twitter /></a>
+            <a href="https://www.instagram.com/krushivrundfarm?igsh=MTU2NDEyczR2ZmN0aw==" className="social-icon"><Instagram /></a>
+            <a href="https://www.linkedin.com/in/kirti-pagar-573286352/" className="social-icon"><Linkedin /></a>
           </div>
         </div>
 
@@ -53,23 +53,25 @@ const Footer = () => {
           <h3>Contact Us</h3>
           <div className="contact-detail">
             <MapPin size={20} />
-            <span>123 Farm Road, Rural Area, State, Country - 123456</span>
+            <span>Krushivrund Farm, Karanjgaone, Nashik</span>
           </div>
           <div className="contact-detail">
             <Phone size={20} />
-            <span>+91 9876543210</span>
+            <span><a href="tel:+918530722395">+91 8530722395</a></span>
+          
           </div>
           <div className="contact-detail">
             <Mail size={20} />
-            <span>info@krushivrund.com</span>
+            <span><a href="mailto:contact@krushivrundfarm.com">contact@krushivrundfarm.com</a></span>
+            
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
         <div className="footer-legal">
-          <Link to="/privacy-policy">Privacy Policy</Link>
-          <Link to="/terms-of-service">Terms of Service</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Terms of Service</Link>
         </div>
         <div className="footer-copyright">
           © {new Date().getFullYear()} Krushivrund Farm. All Rights Reserved.

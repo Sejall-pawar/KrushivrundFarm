@@ -321,6 +321,34 @@ const connectDB = async () => {
   }
 };
 
+app.get("/orders/tracking/:id", jwtVerifyMiddleware, async (req, res) => {
+  try {
+    const { id: orderId } = req.params;
+    
+    // Validate the orderId before querying
+    if (!orderId || orderId === 'undefined' || !mongoose.isValidObjectId(orderId)) {
+      return res.status(400).json({ error: 'Invalid order ID' });
+    }
+    
+    // Now that we know orderId is valid, perform the query
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+    
+    // Prepare tracking data using existing model structure
+    const trackingData = {
+      status: order.status,
+      timeline: order.timeline.sort((a, b) => new Date(b.date) - new Date(a.date))
+    };
+    
+    res.json(trackingData);
+  } catch (error) {
+    console.error('Error fetching order tracking:', error);
+    res.status(500).json({ error: 'Failed to fetch order tracking information' });
+  }
+});
+
 // Health Check Route
 app.get("/health", (req, res) => {
   return responder(res, true, "Server is running");

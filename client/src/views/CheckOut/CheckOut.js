@@ -202,8 +202,8 @@ const Checkout = () => {
                     onChange={(e) => setPaymentMode(e.target.value)}
                   >
                     <option value="Cash On Delivery">Cash On Delivery</option>
-                    <option value="Online Payment">Online Payment</option>
-                  </select>
+                    <option value="Online Payment" disabled>Online Payment (Coming Soon)</option>
+                    </select>
                 </div>
 
                 {error && <div className="error-message">{error}</div>}

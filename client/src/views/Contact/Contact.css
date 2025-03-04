@@ -53,11 +53,20 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap; /* Allow items to wrap */
   }
   
+  .detail-item a{
+    text-decoration: none;
+    color: #003300;
+  }
+  .detail-item p{
+    color: #003300;
+  }
   .contact-details .icon {
-    margin-right: 15px;
+    margin-right: 25px;
     font-size: 1.2rem;
+    margin-left: -20px;
   }
   
   .social-links {
@@ -72,36 +81,9 @@
     transition: color 0.3s ease;
   }
   
-  .contact-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
   
-  .contact-form input,
-  .contact-form textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
   
-  .contact-form textarea {
-    height: 150px;
-  }
   
-  .submit-btn {
-    background-color: #003300;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-btn:hover {
-    background-color: #215614;
-  }
   
   @media (max-width: 768px) {
     .contact-content {

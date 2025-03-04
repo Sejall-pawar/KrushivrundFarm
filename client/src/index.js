@@ -11,6 +11,7 @@ import Account from "./views/Account/Account"
 import Cart from "./views/Cart/Cart"
 import Checkout from './views/CheckOut/CheckOut';
 import OrderConfirmation from './views/OrderConfirmation/OrderConfirmation';
+import  OrderTracking  from './views/OrderTracking/OrderTracking';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter ([
   {
     path: '/order-confirmation/:orderId',
     element: <OrderConfirmation/>
+  },
+  {
+    path: '/ordertracking',
+    element: <OrderTracking/>
   }
 ])
 

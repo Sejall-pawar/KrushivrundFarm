@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     background-color: #f8f9fa;
+    
   }
   
   /* Hero Section */
@@ -49,8 +50,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    padding: 2rem;
-    max-width: 1280px;
+    max-width: 1400px;
     margin: 0 auto;
     width: 100%;
   }
@@ -231,8 +231,9 @@
     width: 100%;
     padding: 1rem;
     margin-top: 1.5rem;
-    background: linear-gradient(rgba(18, 58, 24, 0.8), rgba(32, 78, 32, 0.8));
+    background-color: #003300;
     color: white;
+    border: 1px solid #003300;
     border: none;
     border-radius: 6px;
     font-weight: 600;
@@ -252,9 +253,9 @@
     width: 100%;
     padding: 1rem;
     margin-top: 0.75rem;
-    background: transparent;
-    color: #495057;
-    border: 1px solid #ced4da;
+    background-color: #003300;
+    color: white;
+    border: 1px solid #003300;
     border-radius: 6px;
     font-weight: 500;
     cursor: pointer;
@@ -298,7 +299,7 @@
   
   .start-shopping-btn {
     padding: 0.75rem 1.5rem;
-    background-color: #6e8efb;
+    background-color: #003300;
     color: white;
     border: none;
     border-radius: 6px;
@@ -308,7 +309,7 @@
   }
   
   .start-shopping-btn:hover {
-    background-color: #5b7bf7;
+    background-color: #0e630e;
   }
   
   /* Responsive Design */

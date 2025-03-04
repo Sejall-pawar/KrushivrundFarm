@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaUserCircle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { FiEdit, FiShoppingCart, FiHeart, FiBox, FiCreditCard, FiBell, FiLogOut } from 'react-icons/fi';
 import './Account.css';
 import Header from "../../components/Header/Header";
@@ -518,46 +519,8 @@ const Account = () => {
                             <FiEdit className="icon" />
                             Profile
                         </a>
-                        <a
-                            href="#"
-                            className={`anav-link ${activeTab === 'orders' ? 'active' : ''}`}
-                            onClick={() => handleTabClick('orders')}
-                        >
-                            <FiShoppingCart className="icon" />
-                            Orders
-                        </a>
-                        <a
-                            href="#"
-                            className={`anav-link ${activeTab === 'wishlist' ? 'active' : ''}`}
-                            onClick={() => handleTabClick('wishlist')}
-                        >
-                            <FiHeart className="icon" />
-                            Wishlist
-                        </a>
-                        <a
-                            href="#"
-                            className={`anav-link ${activeTab === 'current-orders' ? 'active' : ''}`}
-                            onClick={() => handleTabClick('current-orders')}
-                        >
-                            <FiBox className="icon" />
-                            Current Orders
-                        </a>
-                        <a
-                            href="#"
-                            className={`anav-link ${activeTab === 'payment' ? 'active' : ''}`}
-                            onClick={() => handleTabClick('payment')}
-                        >
-                            <FiCreditCard className="icon" />
-                            Payment
-                        </a>
-                        <a
-                            href="#"
-                            className={`anav-link ${activeTab === 'notifications' ? 'active' : ''}`}
-                            onClick={() => handleTabClick('notifications')}
-                        >
-                            <FiBell className="icon" />
-                            Notifications
-                        </a>
+                        
+                        
                         <a href="#" className="anav-link logout" onClick={handleLogout}>
                             <FiLogOut className="icon" />
                             Logout
@@ -593,36 +556,7 @@ const Account = () => {
                             </div>
                         </div>
                     )}
-                    {activeTab === 'orders' && (
-                        <div className="orders-tab">
-                            <h1>Orders</h1>
-                            <p>You don't have any orders yet.</p>
-                        </div>
-                    )}
-                    {activeTab === 'wishlist' && (
-                        <div className="wishlist-tab">
-                            <h1>Wishlist</h1>
-                            <p>Your wishlist is empty.</p>
-                        </div>
-                    )}
-                    {activeTab === 'current-orders' && (
-                        <div className="current-orders-tab">
-                            <h1>Current Orders</h1>
-                            <p>You don't have any active orders at the moment.</p>
-                        </div>
-                    )}
-                    {activeTab === 'payment' && (
-                        <div className="payment-tab">
-                            <h1>Payment</h1>
-                            <p>No payment methods added yet.</p>
-                        </div>
-                    )}
-                    {activeTab === 'notifications' && (
-                        <div className="notifications-tab">
-                            <h1>Notifications</h1>
-                            <p>You don't have any notifications.</p>
-                        </div>
-                    )}
+                    
                 </div>
             </div>
             <Footer/>

@@ -28,88 +28,56 @@ const Contact = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="contact-container">
-      <div className="contact-header">
-        <h1>Contact Krushivrund Farm</h1>
-        <p>We're here to connect, answer your questions, and share our passion for fresh, organic produce.</p>
-      </div>
+      <Header />
+      <div className="contact-container">
+        <div className="contact-header">
+          <h1>Contact Krushivrund Farm</h1>
+          <p>We're here to connect, answer your questions, and share our passion for fresh, organic produce.</p>
+        </div>
 
-      <div className="contact-content">
-        <div className="contact-info">
-          <div className="info-section">
-            <h2>Get in Touch</h2>
-            <div className="contact-details">
-              <div className="detail-item">
-                <span className="icon">📍</span>
-                <p>Krushivrund Farm, Karanjgaone, Nashik</p>
+        <div className="contact-content">
+          <div className="contact-info">
+            <div className="info-section">
+              <h2>Get in Touch</h2>
+              <div className="contact-details">
+                <div className="detail-item">
+                  <span className="icon">📍</span>
+                  <p>Krushivrund Farm, Karanjgaone, Nashik</p>
+                </div>
+                <div className="detail-item">
+                  <span className="icon">📞 :</span>
+                  <p>
+                    <a href="tel:+918530722395">+91 8530722395</a>
+                  </p>
+                </div>
+                <div className="detail-item">
+                  <span className="icon">📧 :</span>
+                  <p>
+                    <a href="mailto:contact@krushivrundfarm.com">contact@krushivrundfarm.com</a>
+                  </p>
+                </div>
+
               </div>
-              <div className="detail-item">
-                <span className="icon">📞</span>
-                <p>+91 [Your Phone Number]</p>
-              </div>
-              <div className="detail-item">
-                <span className="icon">📧</span>
-                <p>info@krushivrundfarm.com</p>
+            </div>
+
+            <div className="business-hours">
+              <h2>Business Hours</h2>
+              <p>Monday to Sunday: 9:00 AM – 6:00 PM</p>
+            </div>
+
+            <div className="social-media">
+              <h2>Follow Us</h2>
+              <div className="social-links">
+                <a href="https://www.instagram.com/krushivrundfarm?igsh=MTU2NDEyczR2ZmN0aw==" className="social-icon"><Instagram size={24} /> Instagram</a>
+                <a href="https://www.facebook.com/krushivrundfarm" className="social-icon"><Facebook size={24} /> Facebook</a>
+                <a href="https://x.com/krushivrunfarm" className="social-icon"><Twitter size={24} /> Twitter</a>
               </div>
             </div>
           </div>
 
-          <div className="business-hours">
-            <h2>Business Hours</h2>
-            <p>Monday to Saturday: 9:00 AM – 6:00 PM</p>
-            <p>Sunday: Closed</p>
-          </div>
-
-          <div className="social-media">
-            <h2>Follow Us</h2>
-            <div className="social-links">
-              <a href="#" className="social-icon"><Instagram size={24} /> Instagram</a>
-              <a href="#" className="social-icon"><Facebook size={24} /> Facebook</a>
-              <a href="#" className="social-icon"><Twitter size={24} /> Twitter</a>
-            </div>
-          </div>
-        </div>
-
-        <div className="contact-form">
-          <h2>Send Us a Message</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number (Optional)"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-            <textarea
-              name="message"
-              placeholder="Write Your Query or Feedback Here"
-              value={formData.message}
-              onChange={handleChange}
-              required
-            ></textarea>
-            <button type="submit" className="submit-btn">Send Message</button>
-          </form>
         </div>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 };

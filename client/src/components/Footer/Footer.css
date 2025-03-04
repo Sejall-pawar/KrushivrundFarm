@@ -71,6 +71,11 @@
   margin-bottom: 0.75rem;
 }
 
+.contact-detail a{
+  text-decoration: none;
+  color: #003300;
+}
+
 .footer-bottom {
   max-width: 1200px;
   margin: 2rem auto 0;
