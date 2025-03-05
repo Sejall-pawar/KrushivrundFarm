@@ -44,7 +44,6 @@ const Footer = () => {
             <li>Fresh Grapes</li>
             <li>Natural Raisins</li>
             <li>Raisin Bars</li>
-            <li>Organic Farming Equipment</li>
             <li>Grape Derivatives</li>
           </ul>
         </div>

@@ -489,9 +489,7 @@ const Account = () => {
                                 <p>Already have an account? <button onClick={toggleAuthMode}>Login</button></p>
                             )}
                         </div>
-                        
-                        {/* Debug info - remove in production */}
-                        {debugSection}
+                       
                     </div>
                 </div>
                 <Footer />

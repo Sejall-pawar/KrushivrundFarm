@@ -10,11 +10,12 @@ import Footer from "../../components/Footer/Footer"
 // Import images
 import one from "../../Assets/Images/img1.jpg";
 import two from "../../Assets/Images/img2.jpg";
-import three from "../../Assets/Images/three.avif";
+import three from "../../Assets/Images/img10.jpg";
 import four from "../../Assets/Images/five.avif";
+import five from "../../Assets/Images/img9.jpg";
 
 const AdvancedSlider = () => {
-  const images = [one, two, three, four];
+  const images = [five, three, one, four];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
